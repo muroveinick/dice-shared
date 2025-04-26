@@ -7,10 +7,6 @@
     "outDir": "../dist",
     "esModuleInterop": true,
     "strict": true,
-    "baseUrl": ".",
-    "paths": {
-      "@root/*": ["../src/*"]
-    }
   },
   "include": ["interfaces.ts"]
 }
