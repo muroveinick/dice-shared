@@ -19,7 +19,7 @@ export interface IHex {
 export interface IFigure {
   config: {
     color: string;
-    initialHex: any;
+    initialHex: IHex;
     index: number;
   };
   linked_hexes: Array<IHex>;
