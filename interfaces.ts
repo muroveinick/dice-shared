@@ -51,3 +51,22 @@ export interface IGame {
   createdAt: Date;
   lastActivity: Date;
 }
+
+export interface IUser {
+  email: string;
+  password: string;
+  username: string;
+  role: "user" | "admin";
+  // verificationToken?: string;
+  // resetPasswordToken?: string;
+  // resetPasswordExpires?: Date;
+  createdAt: Date;
+}
+
+
+export interface ErrorResponse {
+  status: string;
+  message: string;
+  code?: string;
+  details?: any;
+}
