@@ -61,8 +61,20 @@ export interface IUser {
   // resetPasswordToken?: string;
   // resetPasswordExpires?: Date;
   createdAt: Date;
+  comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
+export interface ILoginResponse {
+  status: string;
+  accessToken: string;
+  refreshToken: string;
+  user: {
+    id: string;
+    email: string;
+    username: string;
+    role: string;
+  };
+}
 
 export interface ErrorResponse {
   status: string;
