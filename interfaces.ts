@@ -31,7 +31,7 @@ export interface IFigure {
 }
 
 export interface IPlayer {
-  _id?: ObjectId;
+  id?: string;
   config: {
     color: string;
     isAuto: boolean;
@@ -58,17 +58,13 @@ export interface IUser {
   password: string;
   username: string;
   role: "user" | "admin";
-  // verificationToken?: string;
-  // resetPasswordToken?: string;
-  // resetPasswordExpires?: Date;
   createdAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 export interface ILoginResponse {
   status: string;
-  accessToken: string;
-  refreshToken: string;
+  token: string;
   user: {
     id: string;
     email: string;
