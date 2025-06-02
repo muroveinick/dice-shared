@@ -52,7 +52,7 @@ export interface IGame {
   lastActivity: Date;
 }
 
-export interface IUser {
+export interface IUserScheme {
   _id: string;
   email: string;
   password: string;
@@ -62,15 +62,24 @@ export interface IUser {
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
+export interface IUser {
+  id: string;
+  email: string;
+  username: string;
+  role: string;
+}
+
+
 export interface ILoginResponse {
   status: string;
   token: string;
-  user: {
-    id: string;
-    email: string;
-    username: string;
-    role: string;
-  };
+  user: IUser;
+}
+
+export interface IJoinGameResponse {
+  message: string;
+  game: IGame;
+  player: IPlayer;
 }
 
 export interface ErrorResponse {
