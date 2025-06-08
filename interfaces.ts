@@ -53,7 +53,7 @@ export interface IGame {
 }
 
 export interface IUserScheme {
-  _id: string;
+  _id: ObjectId;
   email: string;
   password: string;
   username: string;
