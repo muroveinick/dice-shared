@@ -1,6 +1,7 @@
-export interface ObjectId {
-  _id: string;
-}
+// export interface ObjectId {
+//   _id: string;
+// }
+export type ObjectId = string
 
 interface IGrid {
   cols: number;
@@ -40,7 +41,7 @@ export interface IPlayer {
 }
 
 export interface IGame {
-  id: string;
+  _id: ObjectId;
   name: string;
   players: IPlayer[];
   currentPlayerIndex: number;
@@ -77,9 +78,9 @@ export interface ILoginResponse {
 }
 
 export interface IJoinGameResponse {
-  message: string;
-  game: IGame;
+  gameId: string;
   player: IPlayer;
+  user: Pick<IUser, 'id' | 'username'>;
 }
 
 export interface ErrorResponse {

@@ -1,3 +1,5 @@
+import { IFigure } from "./interfaces.js";
+
 /**
  * Socket.io event names used for communication between client and server
  */
@@ -8,14 +10,23 @@ export enum SocketEvents {
   CONNECT_ERROR = 'connect_error',
   ERROR = 'error',
 
-  // Game-specific events
+  // Game-specific events 
   JOIN_GAME = 'join-game',
   GAME_UPDATE = 'game-update',
   TURN_UPDATE = 'turn-update',
+  // NEXT_TURN = 'next-turn',
 
-  // Message types in payloads
-  MESSAGE_TYPE_GAME_UPDATE = 'GAME_UPDATE',
+}
+
+
+export enum TurnMessageType {
+  MESSAGE_TYPE_NEXT_TURN = 'NEXT_TURN',
   MESSAGE_TYPE_TURN_UPDATE = 'TURN_UPDATE'
+}
+
+export interface IMessage {
+  type: string;
+  gameId: string;
 }
 
 /**
@@ -23,15 +34,7 @@ export enum SocketEvents {
  */
 export interface IJoinGamePayload {
   gameId: string;
-}
-
-
-export interface IGameBattleResponse {
-  attacker: number;
-  defender: number;
-  winner: number;
-  attackerRoll: number;
-  defenderRoll: number;
+  userId: string;
 }
 
 export interface IGameBattlePayload {
@@ -39,15 +42,46 @@ export interface IGameBattlePayload {
   defender: number;
 }
 
-
-export interface ITurnUpdatePayload {
-  type: typeof SocketEvents.MESSAGE_TYPE_TURN_UPDATE;
-  gameId: string;
-  data: IGameBattlePayload;
+export interface IGameBattleResponse {
+  // attacker: IPlayer;
+  // defender: IPlayer;
+  figures: [IFigure, IFigure],
+  winner: number;
+  attackerRoll: number;
+  defenderRoll: number;
 }
 
-export interface IGameUpdatePayload {
-  type: typeof SocketEvents.MESSAGE_TYPE_GAME_UPDATE;
-  gameId: string;
-  game: any; // This would typically be the full game object
+
+export interface INextTurnPayload {
+  // gameId: string;
+  currentPlayerIndex: number;
 }
+
+export interface INextTurnResponse {
+  // gameId: string;
+  newPlayerIndex: number;
+  turnCount: number;
+  // playerOrder: string[];
+  defeatedPlayerIndex?: number; // Include if a player was defeated
+  gamePhase: string;
+}
+
+
+
+export interface ITurnUpdateResponse extends IMessage {
+  type: TurnMessageType;
+  data: INextTurnResponse | IGameBattleResponse;
+}
+
+
+export interface ITurnUpdatePayload extends IMessage {
+  type: TurnMessageType;
+  gameId: string;
+  data: IGameBattlePayload | INextTurnPayload;
+}
+
+// export interface IGameUpdatePayload {
+//   type: typeof SocketEvents.MESSAGE_TYPE_GAME_UPDATE;
+//   gameId: string;
+//   game: any; // This would typically be the full game object
+// }
