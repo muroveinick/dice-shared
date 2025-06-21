@@ -5,23 +5,21 @@ import { IFigure } from "./interfaces.js";
  */
 export enum SocketEvents {
   // Connection events
-  CONNECT = 'connect',
-  DISCONNECT = 'disconnect',
-  CONNECT_ERROR = 'connect_error',
-  ERROR = 'error',
+  CONNECT = "connect",
+  DISCONNECT = "disconnect",
+  CONNECT_ERROR = "connect_error",
+  ERROR = "error",
 
-  // Game-specific events 
-  JOIN_GAME = 'join-game',
-  GAME_UPDATE = 'game-update',
-  TURN_UPDATE = 'turn-update',
+  // Game-specific events
+  JOIN_GAME = "join-game",
+  GAME_UPDATE = "game-update",
+  TURN_UPDATE = "turn-update",
   // NEXT_TURN = 'next-turn',
-
 }
 
-
 export enum TurnMessageType {
-  MESSAGE_TYPE_NEXT_TURN = 'NEXT_TURN',
-  MESSAGE_TYPE_TURN_UPDATE = 'TURN_UPDATE'
+  MESSAGE_TYPE_NEXT_TURN = "NEXT_TURN",
+  MESSAGE_TYPE_TURN_UPDATE = "TURN_UPDATE",
 }
 
 export interface IMessage {
@@ -45,34 +43,30 @@ export interface IGameBattlePayload {
 export interface IGameBattleResponse {
   // attacker: IPlayer;
   // defender: IPlayer;
-  figures: [IFigure, IFigure],
+  figures: [IFigure, IFigure];
   winner: number;
   attackerRoll: number;
   defenderRoll: number;
 }
 
-
 export interface INextTurnPayload {
   // gameId: string;
   currentPlayerIndex: number;
+  supplyAmount: number;
 }
 
 export interface INextTurnResponse {
-  // gameId: string;
+  playerFigures: Array<Pick<IFigure, "config" | "dice">>;
   newPlayerIndex: number;
   turnCount: number;
-  // playerOrder: string[];
   defeatedPlayerIndex?: number; // Include if a player was defeated
   gamePhase: string;
 }
-
-
 
 export interface ITurnUpdateResponse extends IMessage {
   type: TurnMessageType;
   data: INextTurnResponse | IGameBattleResponse;
 }
-
 
 export interface ITurnUpdatePayload extends IMessage {
   type: TurnMessageType;

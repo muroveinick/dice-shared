@@ -1,7 +1,5 @@
-// export interface ObjectId {
-//   _id: string;
-// }
-export type ObjectId = string
+import { ColorKey } from "./data.js";
+export type ObjectId = string;
 
 interface IGrid {
   cols: number;
@@ -19,7 +17,7 @@ export interface IHex {
 
 export interface IFigure {
   config: {
-    color: string;
+    color: ColorKey;
     initialHex: IHex;
     index: number;
   };
@@ -34,7 +32,7 @@ export interface IFigure {
 export interface IPlayer {
   id?: string;
   config: {
-    color: string;
+    color: ColorKey;
     isAuto: boolean;
   };
   figures: Array<number>;
@@ -70,7 +68,6 @@ export interface IUser {
   role: string;
 }
 
-
 export interface ILoginResponse {
   status: string;
   token: string;
@@ -80,7 +77,7 @@ export interface ILoginResponse {
 export interface IJoinGameResponse {
   gameId: string;
   player: IPlayer;
-  user: Pick<IUser, 'id' | 'username'>;
+  user: Pick<IUser, "id" | "username">;
 }
 
 export interface ErrorResponse {
