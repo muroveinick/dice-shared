@@ -1,4 +1,4 @@
-import { IFigure } from "./interfaces.js";
+import { GamePhase, IFigure, IPlayer } from "./interfaces.js";
 
 /**
  * Socket.io event names used for communication between client and server
@@ -11,10 +11,9 @@ export enum SocketEvents {
   ERROR = "error",
 
   // Game-specific events
+  OFFLINE = "offline",
   JOIN_GAME = "join-game",
-  GAME_UPDATE = "game-update",
   TURN_UPDATE = "turn-update",
-  // NEXT_TURN = 'next-turn',
 }
 
 export enum TurnMessageType {
@@ -35,22 +34,27 @@ export interface IJoinGamePayload {
   userId: string;
 }
 
+export interface IJoinGameResponse {
+  gameId: string;
+  player: IPlayer; // The player who just joined or triggered the event
+  onlinePlayers: string[];
+}
+
 export interface IGameBattlePayload {
   attacker: number;
   defender: number;
+  playerIndex: number;
 }
 
 export interface IGameBattleResponse {
-  // attacker: IPlayer;
-  // defender: IPlayer;
   figures: [IFigure, IFigure];
   winner: number;
   attackerRoll: number;
   defenderRoll: number;
+  defeatedPlayerIndex?: number; // Include if a player was defeated
 }
 
 export interface INextTurnPayload {
-  // gameId: string;
   currentPlayerIndex: number;
   supplyAmount: number;
 }
@@ -59,8 +63,7 @@ export interface INextTurnResponse {
   playerFigures: Array<Pick<IFigure, "config" | "dice">>;
   newPlayerIndex: number;
   turnCount: number;
-  defeatedPlayerIndex?: number; // Include if a player was defeated
-  gamePhase: string;
+  gamePhase: GamePhase;
 }
 
 export interface ITurnUpdateResponse extends IMessage {
@@ -73,9 +76,3 @@ export interface ITurnUpdatePayload extends IMessage {
   gameId: string;
   data: IGameBattlePayload | INextTurnPayload;
 }
-
-// export interface IGameUpdatePayload {
-//   type: typeof SocketEvents.MESSAGE_TYPE_GAME_UPDATE;
-//   gameId: string;
-//   game: any; // This would typically be the full game object
-// }
