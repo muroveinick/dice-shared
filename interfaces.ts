@@ -1,6 +1,8 @@
 import { ColorKey } from "./data.js";
 export type ObjectId = string;
 
+export type GamePhase = "SETUP" | "PLAYING" | "FINISHED";
+
 interface IGrid {
   cols: number;
   rows: number;
@@ -30,12 +32,13 @@ export interface IFigure {
 }
 
 export interface IPlayer {
-  id?: string;
   config: {
     color: ColorKey;
     isAuto: boolean;
+    isDefeated?: boolean;
   };
   figures: Array<number>;
+  user?: Pick<IUser, "id" | "username">;
 }
 
 export interface IGame {
@@ -43,7 +46,7 @@ export interface IGame {
   name: string;
   players: IPlayer[];
   currentPlayerIndex: number;
-  gamePhase: "SETUP" | "PLAYING" | "FINISHED";
+  gamePhase: GamePhase;
   turnCount: number;
   grid: IGrid;
   figures: IFigure[];
@@ -69,15 +72,8 @@ export interface IUser {
 }
 
 export interface ILoginResponse {
-  status: string;
   token: string;
   user: IUser;
-}
-
-export interface IJoinGameResponse {
-  gameId: string;
-  player: IPlayer;
-  user: Pick<IUser, "id" | "username">;
 }
 
 export interface ErrorResponse {
