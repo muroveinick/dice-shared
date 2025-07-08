@@ -14,6 +14,9 @@ export enum SocketEvents {
   OFFLINE = "offline",
   JOIN_GAME = "join-game",
   TURN_UPDATE = "turn-update",
+  // Auto play controller events
+  AUTO_PLAY_STATUS = "auto-play-status",
+  CLAIM_AUTO_PLAY = "claim-auto-play",
 }
 
 export enum TurnMessageType {
@@ -64,6 +67,16 @@ export interface INextTurnResponse {
   newPlayerIndex: number;
   turnCount: number;
   gamePhase: GamePhase;
+}
+
+export interface IAutoPlayStatus {
+  controllerId: string | null;
+  enabled: boolean;
+}
+
+export interface IAutoPlayClaimPayload {
+  gameId: string;
+  enable: boolean; // true to claim, false to release
 }
 
 export interface ITurnUpdateResponse extends IMessage {

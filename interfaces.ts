@@ -1,5 +1,6 @@
 import { ColorKey } from "./data.js";
-export type ObjectId = string;
+import { Types } from "mongoose";
+export type ObjectId = Types.ObjectId;
 
 export type GamePhase = "SETUP" | "PLAYING" | "FINISHED";
 
@@ -38,7 +39,10 @@ export interface IPlayer {
     isDefeated?: boolean;
   };
   figures: Array<number>;
-  user?: Pick<IUser, "id" | "username">;
+  user?: {
+    id: ObjectId;
+    username: string;
+  };
 }
 
 export interface IGame {
@@ -52,6 +56,7 @@ export interface IGame {
   figures: IFigure[];
   createdAt: Date;
   lastActivity: Date;
+  autoPlayControllerId?: string | null;
 }
 
 export interface IUserScheme {
@@ -72,7 +77,7 @@ export interface IUser {
 }
 
 export interface ILoginResponse {
-  token: string;
+  token?: string;
   user: IUser;
 }
 
